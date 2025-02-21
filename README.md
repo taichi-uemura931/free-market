@@ -64,6 +64,10 @@ php artisan storage:link
 - Laravel8.83.27
 - MySQL8.0.26
 
+## ER 図
+
+![alt](er.drawio.png)
+
 ## URL
 
 - 開発環境：http://localhost/
