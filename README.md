@@ -4,7 +4,7 @@
 
 **Docker ビルド**
 
-1. `git clone git@github.com:差し替えます
+1. git clone git@github.com:差し替えます
 2. DockerDesktop アプリを立ち上げる
 3. `docker-compose up -d --build`
 
