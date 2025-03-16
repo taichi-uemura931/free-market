@@ -15,10 +15,10 @@ class CreateProductsCategoriesTable extends Migration
     {
         Schema::create('products_categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id'); // 明示的に product_id を設定
+            $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('product_id')->on('products')->onDelete('cascade');
 
-            $table->unsignedBigInteger('category_id'); // category_id はそのままでOK
+            $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
 
             $table->timestamps();
