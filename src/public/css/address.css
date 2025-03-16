@@ -1,0 +1,56 @@
+.address-container {
+    margin-top: 20px;
+    padding: 0 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: inherit;
+}
+
+.address-container h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.address-form label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.address-form input[type="text"] {
+    width: 600px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.address-submit {
+    display: block;
+    width: 600px;
+    background-color: #ff6b6b;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.address-submit:hover {
+    background-color: #ff4d4d;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,225 @@
+main {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.container form {
+    text-align: left;
+}
+
+
+.product-create-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 60px auto 0;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.product-create-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.product-create-container form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #444;
+}
+
+.container button,
+.container input,
+.container select,
+.container textarea {
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+}
+.container input[type="text"],
+.container input[type="number"],
+.container select,
+.container textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    margin-bottom: 25px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+}
+
+.container textarea {
+    resize: none;
+    min-height: 100px;
+}
+
+.product-create-container input[type="file"] {
+    margin-bottom: 25px;
+    padding: 6px;
+}
+
+.section-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: block;
+    color: #333;
+}
+
+.section-divider {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 0 0 10px;
+}
+
+.section-heading {
+    font-weight: bold;
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.image-upload-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 30px 20px;
+    margin-bottom: 25px;
+    background-color: #fafafa;
+}
+
+.image-select-button {
+    padding: 10px 20px;
+    background-color: #fff;
+    border: 2px solid #ff6b6b;
+    color: #ff6b6b;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.image-select-button:hover {
+    background-color: #ffeaea;
+}
+
+#imagePreview {
+    margin-top: 20px;
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#imagePreview img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.category-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.category-checkbox {
+    position: relative;
+}
+
+.category-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.category-checkbox span {
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid #ff6b6b;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #ff6b6b;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-checkbox input[type="checkbox"]:checked+span {
+    background-color: #ff6b6b;
+    color: #fff;
+}
+
+.product-create-container .btn-submit {
+    display: block;
+    width: 100%;
+    background-color: #ff6b6b;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+textarea {
+    resize: none;
+    height: 150px;
+}
+
+.product-create-container .btn-submit:hover {
+    background-color: #ff4c4c;
+}
+
+.btn-submit {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    background-color: #ff6b6b;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #ff4d4d;
+}
+
+.error-message {
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+}

@@ -1,0 +1,126 @@
+main {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+.profile-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.profile-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.profile-container {
+    width: 680px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.profile-image-label {
+    display: block;
+}
+
+.profile-image-label img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    background-color: #ddd;
+    cursor: pointer;
+    display: block;
+}
+
+.profile-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 16px;
+}
+
+.profile-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+
+.profile-image input {
+    margin-top: 10px;
+}
+
+.image-select-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #fff;
+    border: 2px solid #ff6b6b;
+    color: #ff6b6b;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.image-select-button:hover {
+    background-color: #ffeaea;
+    text-decoration: none;
+}
+
+#image {
+    display: none;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+}
+
+.update-btn {
+    width: 100%;
+    max-width: 600px;
+    padding: 12px;
+    background-color: #ff6b6b;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 20px 0 0;
+}
+
+.update-btn:hover {
+    background: #ff4d4d;
+}

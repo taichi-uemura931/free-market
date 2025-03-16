@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -37,5 +38,15 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        // 419 Page Expired エラーのリダイレクト処理
+        if ($exception instanceof HttpException && $exception->getStatusCode() === 419) {
+            return redirect()->route('login')->with('error', 'セッションの有効期限が切れました。再度ログインしてください。');
+        }
+
+        return parent::render($request, $exception);
     }
 }

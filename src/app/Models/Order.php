@@ -16,6 +16,7 @@ class Order extends Model
         'product_id',
         'payment_id',
         'status',
+        'payment_method',
         'created_at',
     ];
 

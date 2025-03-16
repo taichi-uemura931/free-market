@@ -32,6 +32,18 @@ DB_PORT=3306
 DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
+
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=example@example.com
+MAIL_FROM_NAME="COACHTECH新フリマ"
+
+STRIPE_SECRET_KEY=sk_test_XXXXXXXXXXXXXXXXXXXXXXXX
+STRIPE_PUBLIC_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 5. アプリケーションキーの作成
@@ -63,6 +75,9 @@ php artisan storage:link
 - PHP8.3.0
 - Laravel8.83.27
 - MySQL8.0.26
+- Docker / docker-compose
+- Stripe（クレジット/コンビニ決済）
+- Mailhog（開発用メールサーバ）
 
 ## ER 図
 
@@ -71,4 +86,5 @@ php artisan storage:link
 ## URL
 
 - 開発環境：http://localhost/
+- Mailhog： http://localhost:8025
 - phpMyAdmin:：http://localhost:8080/
