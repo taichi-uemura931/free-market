@@ -69,7 +69,7 @@ class ProductController extends Controller
 
     public function show($product_id)
     {
-        $product = Product::where('product_id', $product_id)->firstOrFail();
+        $product = Product::with('categories')->findOrFail($product_id);
 
         return view('products.show', compact('product'));
     }
