@@ -18,13 +18,13 @@ mysql:
     environment:
 ```
 
-### 画像アップロード用ディレクトリの作成（初回のみ）
+## 画像アップロード用ディレクトリの作成（初回のみ）
 
 画像保存用のディレクトリが存在しないと、出品画像やプロフィール画像が正しく保存されません。
 以下のディレクトリを手動で作成してください。
 
-`mkdir -p storage/app/public/products`
-`mkdir -p storage/app/public/profile_images`
+`mkdir -p storage/app/public/products`<br>
+`mkdir -p storage/app/public/profile_images`<br>
 
 **Laravel 環境構築**
 
