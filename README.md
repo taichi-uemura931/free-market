@@ -23,10 +23,8 @@ mysql:
 画像保存用のディレクトリが存在しないと、出品画像やプロフィール画像が正しく保存されません。
 以下のディレクトリを手動で作成してください。
 
-```bash
-mkdir -p storage/app/public/products
-mkdir -p storage/app/public/profile_images
-
+`mkdir -p storage/app/public/products`
+`mkdir -p storage/app/public/profile_images`
 
 **Laravel 環境構築**
 
