@@ -72,7 +72,7 @@
         <form action="{{ route('chat.store', $transaction->id) }}" method="POST" enctype="multipart/form-data" class="chat-form">
             @csrf
             <div class="form-row">
-                <textarea name="content" placeholder="メッセージを入力">{{ old('content') }}</textarea>
+                <textarea name="content" id="chat-content" placeholder="メッセージを入力">{{ old('content') }}</textarea>
 
                 <label for="imageInput" class="submit-button">画像を選択</label>
                 <input type="file" name="image" id="imageInput" accept=".jpeg,.jpg,.png" style="display: none">
@@ -138,6 +138,22 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    const textarea = document.getElementById('chat-content');
+    const key = 'chat_draft_' + {{ $transaction->id }};
+
+    const saved = localStorage.getItem(key);
+    if (saved) {
+        textarea.value = saved;
+    }
+
+    textarea.addEventListener('input', function () {
+        localStorage.setItem(key, textarea.value);
+    });
+
+    document.querySelector('.chat-form').addEventListener('submit', function () {
+        localStorage.removeItem(key);
+    });
+
     const chatBox = document.getElementById('chat-messages');
     if (chatBox) {
         chatBox.scrollTop = chatBox.scrollHeight;
