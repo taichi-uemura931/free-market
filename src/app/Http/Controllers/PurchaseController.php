@@ -55,7 +55,7 @@ class PurchaseController extends Controller
         $shippingAddress = session('shipping_address');
 
         if (!$shippingAddress || !isset($shippingAddress['postal_code'], $shippingAddress['address'])) {
-            return redirect()->back()->withErrors(['shipping_address' => '配送先情報が設定されていません。']);
+            return redirect()->back()->withErrors(['shipping_address' => '配送先情報が設定されていません']);
         }
 
         session(['selected_payment_method' => $request->payment_method]);
@@ -75,8 +75,8 @@ class PurchaseController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => route('stripe.success', ['product_id' => $productId]),
-            'cancel_url' => route('stripe.cancel', ['product_id' => $productId]),
+            'success_url' => route('stripe.success', ['id' => $productId]),
+            'cancel_url' => route('stripe.cancel', ['id' => $productId]),
         ]);
 
         return redirect($checkoutSession->url);
@@ -89,12 +89,12 @@ class PurchaseController extends Controller
 
         $paymentMethod = session('selected_payment_method', 'card');
 
-        $product->sale_status = 'sold';
+        $product->status = 'sold';
         $product->save();
 
         Order::create([
-            'buyer_id' => $user->user_id,
-            'product_id' => $product->product_id,
+            'buyer_id' => $user->id,
+            'product_id' => $product->id,
             'status' => 'completed',
             'payment_method' => $paymentMethod,
         ]);

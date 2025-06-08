@@ -22,7 +22,9 @@
 
     <div class="product-grid">
         @foreach($products as $product)
-                @php $isSold = in_array($product->product_id, $soldProductIds); @endphp
+                @php
+                    $isSold = in_array($product->id, $soldProductIds);
+                @endphp
 
             <div class="product-card {{ $isSold ? 'sold' : '' }}">
                 <div class="product-image-container">
@@ -30,7 +32,7 @@
                         <div class="sold-label">SOLD</div>
                         <img src="{{ $product->img_url ? Storage::url($product->img_url) : asset('images/no-image.png') }}" class="product-image sold-image">
                     @else
-                        <a href="{{ route('products.show', ['product_id' => $product->product_id]) }}" class="product-image-link">
+                        <a href="{{ route('products.show', ['id' => $product->id]) }}" class="product-image-link">
                             <img src="{{ $product->img_url ? Storage::url($product->img_url) : asset('images/no-image.png') }}" class="product-image">
                         </a>
                     @endif

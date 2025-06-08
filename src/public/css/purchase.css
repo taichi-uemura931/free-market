@@ -116,6 +116,12 @@
     right: 60px;
 }
 
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
 .summary-card {
     width: 100%;
     max-width: 800px;

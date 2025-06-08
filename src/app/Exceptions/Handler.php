@@ -42,7 +42,6 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        // 419 Page Expired エラーのリダイレクト処理
         if ($exception instanceof HttpException && $exception->getStatusCode() === 419) {
             return redirect()->route('login')->with('error', 'セッションの有効期限が切れました。再度ログインしてください。');
         }

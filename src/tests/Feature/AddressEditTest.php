@@ -15,10 +15,10 @@ class AddressEditTest extends TestCase
     {
         $user = User::factory()->create();
         $product = Product::factory()->create([
-            'seller_id' => $user->user_id,
+            'seller_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->get('/address/edit?product_id=' . $product->product_id);
+        $response = $this->actingAs($user)->get('/address/edit?id=' . $product->id);
 
         $response->assertStatus(200);
         $response->assertSee('住所の変更');

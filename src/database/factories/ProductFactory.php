@@ -16,7 +16,6 @@ class ProductFactory extends Factory
             'product_name' => $this->faker->word,
             'description' => $this->faker->sentence,
             'price' => $this->faker->numberBetween(1000, 10000),
-            'category' => 'ファッション',
             'condition' => $this->faker->randomElement([
             '良好',
             '目立った傷や汚れなし',

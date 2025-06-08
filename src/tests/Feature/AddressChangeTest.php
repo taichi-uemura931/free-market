@@ -18,11 +18,11 @@ class AddressChangeTest extends TestCase
         $product = Product::factory()->create();
 
         $response = $this->actingAs($user)->post('/address/update', [
-            'buyer_id' => $user->user_id,
+            'buyer_id' => $user->id,
             'postal_code' => '123-4567',
             'address' => '東京都新宿区',
             'building_name' => 'テストビル',
-            'product_id' => $product->product_id
+            'product_id' => $product->id
         ]);
 
         $response->assertRedirect();

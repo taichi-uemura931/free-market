@@ -21,14 +21,16 @@ class ProductSeeder extends Seeder
         DB::table('products')->truncate();
         Schema::enableForeignKeyConstraints();
 
-        DB::table('users')->insert([
-            'user_id' => 1,
-            'username' => 'テストユーザー',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password'),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $categoryNames = ['ファッション', '家電', 'キッチン', 'メンズ', 'レディース', 'アクセサリー', 'コスメ'];
+        $categoryMap = [];
+        foreach ($categoryNames as $name) {
+            $id = DB::table('categories')->insertGetId([
+                'name' => $name,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            $categoryMap[$name] = $id;
+        }
 
         $products = [
             [
@@ -93,7 +95,7 @@ class ProductSeeder extends Seeder
                 'img_url' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Music+Mic+4632231.jpg',
                 'category' => '家電',
                 'condition' => '目立った傷や汚れなし',
-                'seller_id' => 1,
+                'seller_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -104,7 +106,7 @@ class ProductSeeder extends Seeder
                 'img_url' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Purse+fashion+pocket.jpg',
                 'category' => 'レディース',
                 'condition' => 'やや傷や汚れあり',
-                'seller_id' => 1,
+                'seller_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -115,7 +117,7 @@ class ProductSeeder extends Seeder
                 'img_url' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Tumbler+souvenir.jpg',
                 'category' => 'アクセサリー',
                 'condition' => '状態が悪い',
-                'seller_id' => 1,
+                'seller_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -126,7 +128,7 @@ class ProductSeeder extends Seeder
                 'img_url' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Waitress+with+Coffee+Grinder.jpg',
                 'category' => 'キッチン',
                 'condition' => '良好',
-                'seller_id' => 1,
+                'seller_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -137,7 +139,7 @@ class ProductSeeder extends Seeder
                 'img_url' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/%E5%A4%96%E5%87%BA%E3%83%A1%E3%82%A4%E3%82%AF%E3%82%A2%E3%83%83%E3%83%95%E3%82%9A%E3%82%BB%E3%83%83%E3%83%88.jpg',
                 'category' => 'コスメ',
                 'condition' => '目立った傷や汚れなし',
-                'seller_id' => 1,
+                'seller_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -147,28 +149,29 @@ class ProductSeeder extends Seeder
 
         foreach ($products as $product) {
             $imageUrl = $product['img_url'];
-
             $response = Http::get($imageUrl);
-
             if ($response->successful()) {
                 $extension = pathinfo(parse_url($imageUrl, PHP_URL_PATH), PATHINFO_EXTENSION);
-
                 $filename = 'products/' . uniqid() . '.' . $extension;
-
                 Storage::disk('public')->put($filename, $response->body());
-
                 $product['img_url'] = $filename;
             } else {
-
                 $product['img_url'] = 'products/default.jpg';
             }
 
+            $categoryName = $product['category'];
+            unset($product['category']);
+
             $product['created_at'] = now();
             $product['updated_at'] = now();
-            $insertData[] = $product;
+            $productId = DB::table('products')->insertGetId($product);
+
+            DB::table('product_categories')->insert([
+                'product_id' => $productId,
+                'category_id' => $categoryMap[$categoryName],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
-
-        DB::table('products')->insert($insertData);
-
     }
 }

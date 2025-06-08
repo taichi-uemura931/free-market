@@ -14,7 +14,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'users';
-    protected $primaryKey = 'user_id';
     protected $fillable = [
         'username',
         'email',
@@ -35,23 +34,37 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public function products() {
-        return $this->hasMany(Product::class, 'seller_id', 'user_id');
+        return $this->hasMany(Product::class, 'seller_id', 'id');
     }
 
     public function sessions() {
-        return $this->hasMany(Session::class, 'user_id', 'user_id');
+        return $this->hasMany(Session::class, 'user_id', 'id');
     }
 
     public function favorites() {
-        return $this->hasMany(Favorite::class, 'user_id', 'user_id');
+        return $this->hasMany(Favorite::class, 'user_id', 'id');
     }
 
     public function comments() {
-        return $this->hasMany(Comment::class, 'user_id', 'user_id');
+        return $this->hasMany(Comment::class, 'user_id', 'id');
     }
 
     public function orders() {
-        return $this->hasMany(Order::class, 'buyer_id', 'user_id');
+        return $this->hasMany(Order::class, 'buyer_id', 'id');
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'buyer_id')
+            ->orWhere('seller_id', $this->id);
+    }
+
+    public function reviewsReceived() {
+        return $this->hasMany(Review::class, 'reviewee_id');
+    }
+
+    public function averageRating() {
+        return round($this->reviewsReceived()->avg('rating'));
     }
 
     protected function initializeEmailVerification() {

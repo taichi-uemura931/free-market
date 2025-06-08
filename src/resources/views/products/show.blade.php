@@ -18,6 +18,15 @@
 
         <div class="product-info">
             <h2>{{ $product->product_name }}</h2>
+            <p class="seller-profile">
+                @if(Auth::id() !== $product->seller_id)
+                    <p class="seller-profile">
+                        <a href="{{ route('seller.page', $product->seller_id) }}">
+                            {{ $product->seller->username }}
+                        </a>
+                    </p>
+                @endif
+            </p>
             <p class="brand">{{ $product->brand_name ?? '' }}</p>
             <p class="price">
             ¥{{ number_format($product->price) }} <span class="tax-label">（税込）</span></p>
@@ -29,7 +38,7 @@
                     @elseif(!Auth::check() && $product->isLikedByGuest())
                         liked
                     @endif"
-                    data-product-id="{{ $product->product_id }}">
+                    data-product-id="{{ $product->id }}">
                     @if(Auth::check())
                         {{ $product->isLikedBy(Auth::user()) ? '♥' : '♡' }}
                     @else
@@ -43,7 +52,19 @@
             </div>
 
             @auth
-                <a href="{{ route('purchase', ['id' => $product->product_id]) }}" class="buy-button">購入手続きへ</a>
+                @if ($product->status === 'sold')
+                    <p class="buy-button disabled">この商品は既に購入済みです</p>
+                @elseif ($product->seller_id === Auth::id())
+                    <p class="buy-button disabled">あなたの出品商品です</p>
+                @else
+                    <a href="{{ route('purchase', ['id' => $product->id]) }}" class="buy-button">購入手続きへ</a>
+                    @if ($transaction && $transaction->is_completed)
+                        <p class="transaction-button disabled" style="margin-top: 10px;">この出品者との取引は終了しました</p>
+                    @else
+                        <a href="{{ route('transaction.start', $product->id) }}" class="transaction-button" style="margin-top: 10px;">この出品者と取引チャットを開始</a>
+                    @endif
+
+                @endif
             @else
                 <a href="{{ route('login') }}" class="buy-button">ログインして購入</a>
             @endauth
@@ -92,7 +113,7 @@
                 @auth
                     <h3>商品へのコメント</h3>
 
-                    <form action="{{ route('comment.store', ['id' => $product->product_id]) }}" method="POST" novalidate>
+                    <form action="{{ route('comment.store', ['id' => $product->id]) }}" method="POST" novalidate>
                         @csrf
                         <textarea name="comment_text" class="comment-box">{{ old('comment_text') }}</textarea>
 
@@ -130,16 +151,19 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    likeIcon.textContent = data.liked ? '♥' : '♡';
+                    likeIcon.textContent = '♥';
+                    likeIcon.classList.add('liked');
                     likeCountElement.textContent = data.favorites_count;
-
-                    if (data.liked) {
-                        likeIcon.classList.add('liked');
-                    } else {
-                        likeIcon.classList.remove('liked');
-                    }
+                    likeIcon.classList.add('disabled');
+                    likeIcon.style.pointerEvents = 'none';
                 } else {
-                    alert("いいねに失敗しました");
+                    if (data.message === 'すでにいいね済みです。') {
+                        alert(data.message);
+                        likeIcon.classList.add('disabled');
+                        likeIcon.style.pointerEvents = 'none';
+                    } else {
+                        alert(data.message || "エラーが発生しました。");
+                    }
                 }
             })
             .catch(error => console.error('Error:', error));

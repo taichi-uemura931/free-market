@@ -13,16 +13,13 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\AddressController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ReviewController;
 
 Auth::routes(['verify' => true]);
 
-// 会員登録・ログイン関連
 Route::get('/register', [RegisterController::class, 'registerForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 Route::get('/login', [LoginController::class, 'loginForm'])->name('login');
@@ -35,7 +32,6 @@ Route::post('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
-// メール認証
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
     return redirect()->route('profile');
@@ -52,47 +48,47 @@ Route::get('/email/verify', function () {
 
 Route::post('/verification/redirect-send', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
-    return redirect('http://localhost:8025'); // Mailhog/確認用
+    return redirect('http://localhost:8025');
 })->middleware(['auth'])->name('verification.redirect-send');
 
-// プロフィール設定画面（初回用）
 Route::get('/profile', [ProfileController::class, 'edit'])->middleware(['auth', 'verified'])->name('profile');
 
-// 商品一覧・検索・詳細
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/mylist', [ProductController::class, 'mylist'])->middleware('auth')->name('products.mylist');
-Route::get('/products/{product_id}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/search', [ProductController::class, 'search'])->name('search');
 
-// ログイン後の機能グループ
 Route::middleware(['auth'])->group(function () {
-    // プロフィール更新
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    // 商品出品
     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
     Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 
-    // マイページ
     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage');
     Route::get('/mypage/edit', [MypageController::class, 'edit'])->name('mypage.edit');
     Route::post('/mypage/update', [MypageController::class, 'update'])->name('mypage.update');
+    Route::get('/seller/{id}', [MypageController::class, 'sellerPage'])->name('seller.page');
 
-    // いいね機能
     Route::post('/favorite/{productId}', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
 
-    // 商品購入
     Route::get('/purchase/{id}', [PurchaseController::class, 'index'])->name('purchase');
     Route::post('/purchase/{id}', [PurchaseController::class, 'process'])->name('purchase.process');
 
-    // 配送先住所変更
     Route::get('/address/edit', [AddressController::class, 'edit'])->name('address.edit');
     Route::post('/address/update', [AddressController::class, 'update'])->name('address.update');
 
-    // Stripe決済 成功・キャンセル
-    Route::get('/stripe/success/{product_id}', [PurchaseController::class, 'stripeSuccess'])->name('stripe.success');
-    Route::get('/stripe/cancel/{product_id}', [PurchaseController::class, 'stripeCancel'])->name('stripe.cancel');
+    Route::get('/stripe/success/{id}', [PurchaseController::class, 'stripeSuccess'])->name('stripe.success');
+    Route::get('/stripe/cancel/{id}', [PurchaseController::class, 'stripeCancel'])->name('stripe.cancel');
 
-    // コメント投稿
     Route::post('/comment/{id}', [CommentController::class, 'store'])->name('comment.store');
+
+    Route::get('/transaction/start/{product}', [TransactionController::class, 'start'])->name('transaction.start');
+
+    Route::get('/chat/{transaction}', [ChatController::class, 'show'])->name('chat.show');
+    Route::post('/chat/{transaction}', [ChatController::class, 'store'])->name('chat.store');
+
+    Route::patch('/messages/{id}', [MessageController::class, 'update'])->name('messages.update');
+    Route::delete('/messages/{id}', [MessageController::class, 'destroy'])->name('messages.destroy');
+
+    Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
 });

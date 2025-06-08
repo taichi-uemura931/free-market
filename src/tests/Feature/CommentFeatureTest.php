@@ -17,15 +17,15 @@ class CommentFeatureTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create();
 
-        $response = $this->actingAs($user)->post("/comment/{$product->product_id}", [
+        $response = $this->actingAs($user)->post("/comment/{$product->id}", [
             'comment_text' => 'テストコメント'
         ]);
 
         $response->assertRedirect();
 
         $this->assertDatabaseHas('comments', [
-            'user_id' => $user->user_id,
-            'product_id' => $product->product_id,
+            'user_id' => $user->id,
+            'product_id' => $product->id,
             'comment_text' => 'テストコメント'
         ]);
     }
@@ -34,7 +34,7 @@ class CommentFeatureTest extends TestCase
     {
         $product = Product::factory()->create();
 
-        $response = $this->post("/comment/{$product->product_id}", [
+        $response = $this->post("/comment/{$product->id}", [
             'comment_text' => '未ログインコメント'
         ]);
 
@@ -46,7 +46,7 @@ class CommentFeatureTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create();
 
-        $response = $this->actingAs($user)->post("/comment/{$product->product_id}", [
+        $response = $this->actingAs($user)->post("/comment/{$product->id}", [
             'comment_text' => ''
         ]);
 

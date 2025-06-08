@@ -10,7 +10,7 @@
 
     <form action="{{ route('address.update') }}" method="POST" class="address-form">
         @csrf
-        <input type="hidden" name="product_id" value="{{ $product->product_id }}">
+        <input type="hidden" name="product_id" value="{{ $product->id }}">
 
         <label>お名前</label>
         <input type="text" name="name" value="{{ old('name', $shippingAddress['name'] ?? '') }}">

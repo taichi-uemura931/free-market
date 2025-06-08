@@ -16,7 +16,7 @@ class PaymentSelectionTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create();
 
-        $response = $this->actingAs($user)->get('/purchase/' . $product->product_id);
+        $response = $this->actingAs($user)->get('/purchase/' . $product->id);
         $response->assertStatus(200)->assertSee('支払い方法');
     }
 }

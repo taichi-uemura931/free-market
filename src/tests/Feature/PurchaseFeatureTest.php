@@ -40,7 +40,7 @@ class PurchaseFeatureTest extends TestCase
             'building_name' => 'サンプルビル',
         ]]);
 
-        $response = $this->actingAs($user)->post("/purchase/{$product->product_id}", [
+        $response = $this->actingAs($user)->post("/purchase/{$product->id}", [
             'payment_method' => 'card',
         ]);
 
@@ -64,7 +64,7 @@ class PurchaseFeatureTest extends TestCase
             'building_name' => 'テストビル',
         ]]);
 
-        $response = $this->actingAs($user)->post("/purchase/{$product->product_id}", [
+        $response = $this->actingAs($user)->post("/purchase/{$product->id}", [
             'payment_method' => 'convenience_store',
         ]);
 

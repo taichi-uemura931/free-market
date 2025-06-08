@@ -17,24 +17,27 @@
             </div>
         </div>
 
-        <form action="{{ route('purchase.process', $product->product_id) }}" method="POST" class="purchase-form" id="purchase-form">
+        <form action="{{ route('purchase.process', $product->id) }}" method="POST" class="purchase-form" id="purchase-form">
             @csrf
 
             <hr class="section-divider">
             <div class="payment-method-section">
                 <h4 class="section-title">支払い方法</h4>
-                <select name="payment_method" id="payment-method" class="payment-select" >
+                <select name="payment_method" id="payment-method" class="payment-select" value="{{ old('payment_method') }}">
                     <option value="" selected disabled>選択してください</option>
                     <option value="convenience_store">コンビニ払い</option>
                     <option value="card">カード払い</option>
                 </select>
             </div>
+            @error('payment_method')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
 
             <hr class="section-divider">
             <div class="address-section">
                 <div class="address-header">
                     <h4 class="section-title">配送先</h4>
-                    <a href="{{ route('address.edit', ['product_id' => $product->product_id]) }}" class="address-edit-link">変更する</a>
+                    <a href="{{ route('address.edit', ['id' => $product->id]) }}" class="address-edit-link">変更する</a>
                 </div>
                 <p class="address-content">
                     〒{{ $shippingAddress['postal_code'] }}<br>
@@ -42,6 +45,9 @@
                     {{ $shippingAddress['building_name'] }}
                 </p>
             </div>
+            @error('shipping_address')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
 
             <hr class="section-divider">
         </form>

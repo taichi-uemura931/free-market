@@ -198,6 +198,12 @@ textarea {
     background-color: #ff4c4c;
 }
 
+.error {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
 .btn-submit {
     display: block;
     width: 100%;

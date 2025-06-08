@@ -15,10 +15,10 @@ class PurchasePageTest extends TestCase
     {
         $user = User::factory()->create();
         $product = Product::factory()->create([
-            'seller_id' => $user->user_id,
+            'seller_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->get("/purchase/{$product->product_id}");
+        $response = $this->actingAs($user)->get("/purchase/{$product->id}");
 
         $response->assertStatus(200);
         $response->assertSee('商品購入');

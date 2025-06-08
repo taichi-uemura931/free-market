@@ -18,14 +18,6 @@ mysql:
     environment:
 ```
 
-**画像アップロード用ディレクトリの作成（初回のみ）**
-
-画像保存用のディレクトリが存在しないと、出品画像やプロフィール画像が正しく保存されません。
-以下のディレクトリを手動で作成してください。
-
-1. `mkdir -p storage/app/public/products`<br>
-2. `mkdir -p storage/app/public/profile_images`<br>
-
 **Laravel 環境構築**
 
 1. `docker-compose exec php bash`
@@ -52,8 +44,6 @@ MAIL_FROM_NAME="COACHTECH新フリマ"
 
 STRIPE_SECRET_KEY=sk_test_XXXXXXXXXXXXXXXXXXXXXXXX
 STRIPE_PUBLIC_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
-
-SESSION_DOMAIN=localhost
 ```
 
 5. アプリケーションキーの作成
@@ -91,7 +81,7 @@ php artisan storage:link
 
 ## ER 図
 
-![alt](er.drawio.png)
+![alt](er.png)
 
 ## URL
 

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SearchTest extends TestCase
@@ -23,14 +24,14 @@ class SearchTest extends TestCase
 
     public function test_検索状態がマイリストページでも保持されている()
     {
-        $user = \App\Models\User::factory()->create();
+        $user = User::factory()->create();
 
-        $product = \App\Models\Product::factory()->create([
+        $product = Product::factory()->create([
             'product_name' => 'Switch',
         ]);
 
         $user->favorites()->create([
-            'product_id' => $product->product_id,
+            'product_id' => $product->id,
         ]);
 
         $response = $this->actingAs($user)->get('/products/mylist?query=Switch');

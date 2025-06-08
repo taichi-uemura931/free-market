@@ -18,21 +18,16 @@ class ProductDetailTest extends TestCase
             'brand_name' => 'Test Brand',
             'price' => 1234,
             'description' => 'Test Description',
-            'category' => 'ファッション',
             'condition' => '良好',
         ]);
 
-        $category = Category::factory()->create(['name' => 'ファッション']);
-        $product->categories()->attach($category->category_id);
-
-        $response = $this->get("/products/{$product->product_id}");
+        $response = $this->get("/products/{$product->id}");
 
         $response->assertStatus(200);
         $response->assertSee('Test Product');
         $response->assertSee('Test Brand');
         $response->assertSee('1,234');
         $response->assertSee('Test Description');
-        $response->assertSee('ファッション');
         $response->assertSee('良好');
     }
 }

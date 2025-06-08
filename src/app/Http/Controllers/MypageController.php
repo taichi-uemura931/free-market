@@ -4,25 +4,46 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Transaction;
+use App\Models\Review;
 
 class MypageController extends Controller
 {
     public function index()
     {
         $user = auth()->user();
-        $products = Product::where('seller_id', Auth::id())->get();
 
-        $orders = Order::with('product')->where('buyer_id', $user->id)->get();
-        $purchasedProducts = Order::with('product')
-            ->where('buyer_id', $user->user_id)
-            ->get()
-            ->map(function ($order) {
-                return $order->product;
-            });
+        $products = Product::where('seller_id', $user->id)->get();
 
-        return view('mypage.mypage', compact('user', 'products', 'purchasedProducts'));
+        $purchasedOrders = Order::with('product')
+            ->where('buyer_id', $user->id)
+            ->get();
+
+        $purchasedProducts = $purchasedOrders->map(function ($order) {
+            return $order->product;
+        });
+
+        $transactions = Transaction::with('product')
+        ->where(function ($q) use ($user) {
+            $q->where('buyer_id', $user->id)
+                ->orWhere('seller_id', $user->id);
+        })
+        ->where('is_completed', false)
+        ->withCount(['messages as unread_messages_count' => function ($q) use ($user) {
+            $q->where('is_read', false)->where('sender_id', '!=', $user->id);
+        }])
+        ->get();
+
+        $ongoingTransactions = Transaction::where('buyer_id', Auth::id())
+        ->where('is_completed', false)
+        ->get();
+
+        return view('mypage.mypage', compact(
+            'user', 'products', 'purchasedProducts', 'transactions','ongoingTransactions'
+        ));
     }
 
     public function edit()
@@ -55,5 +76,17 @@ class MypageController extends Controller
         $user->save();
 
         return redirect()->route('mypage')->with('success', 'プロフィールを更新しました。');
+    }
+
+    public function sellerPage($id)
+    {
+        $user = User::findOrFail($id);
+
+        $products = Product::where('seller_id', $user->id)->get();
+
+        $averageRating = Review::where('reviewee_id', $user->id)->avg('rating');
+        $roundedRating = $averageRating ? round($averageRating, 1) : null;
+
+        return view('mypage.seller_page', compact('user', 'products', 'roundedRating'));
     }
 }

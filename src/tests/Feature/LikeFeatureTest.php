@@ -16,10 +16,10 @@ class LikeFeatureTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create();
 
-        $this->actingAs($user)->post('/favorite/' . $product->product_id);
-        $this->assertDatabaseHas('favorites', ['user_id' => $user->user_id, 'product_id' => $product->product_id]);
+        $this->actingAs($user)->post('/favorite/' . $product->id);
+        $this->assertDatabaseHas('favorites', ['user_id' => $user->id, 'product_id' => $product->id]);
 
-        $this->actingAs($user)->post('/favorite/' . $product->product_id);
-        $this->assertDatabaseMissing('favorites', ['user_id' => $user->user_id, 'product_id' => $product->product_id]);
+        $this->actingAs($user)->post('/favorite/' . $product->id);
+        $this->assertDatabaseMissing('favorites', ['user_id' => $user->id, 'product_id' => $product->id]);
     }
 }

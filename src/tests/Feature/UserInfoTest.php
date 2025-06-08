@@ -30,6 +30,6 @@ class UserInfoTest extends TestCase
         ]);
 
         $response->assertRedirect();
-        $this->assertDatabaseHas('users', ['user_id' => $user->user_id, 'username' => '変更後ユーザー名']);
+        $this->assertDatabaseHas('users', ['id' => $user->id, 'username' => '変更後ユーザー名']);
     }
 }

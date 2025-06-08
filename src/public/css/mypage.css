@@ -103,6 +103,11 @@
     text-decoration: none;
 }
 
+.user-rating {
+    font-size: 18px;
+    font-weight: bold;
+}
+
 .tab-menu {
     text-align: left;
     margin-top: 20px;
@@ -141,6 +146,27 @@
     justify-items: center;
     padding: 0 20px 20px;
 }
+
+.product-image-container {
+    position: relative;
+}
+
+.notification-dot {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    z-index: 10;
+}
+
 
 @media screen and (min-width: 768px) and (max-width: 850px) {
     .product-grid {
